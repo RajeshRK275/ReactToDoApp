@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TodoItems from "./TodoItems";
+import styles from "./Todo.module.css";
 
 export default function Todo() {
   const [todo, setTodo] = useState("");
@@ -14,16 +15,29 @@ export default function Todo() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          onChange={(e) => setTodo(e.target.value)}
-          value={todo}
-        />
-        <button type="submit">Add</button>
+        <div className={styles.FormStyle}>
+          <div>
+            <input
+              className={styles.Inputbox}
+              type="text"
+              onChange={(e) => setTodo(e.target.value)}
+              value={todo}
+            />
+          </div>
+          <div>
+            <button type="submit">Add</button>
+          </div>
+        </div>
       </form>
-      {todos.map((item) => (
-        <TodoItems key={item} item={item} />
-      ))}
+
+      <div className={styles.todoItems}>
+        {todos.map((item) => (
+          <div className={styles.subItem}>
+            <TodoItems key={item} item={item} />
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 }
