@@ -1,29 +1,18 @@
 import { useState } from "react";
-import TodoItems from "./TodoItems";
+import Form from "./Form";
+import TodoList from "./TodoList";
+import Footer from "./Footer";
 
 export default function Todo() {
-  const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setTodos([...todos, todo]);
-    setTodo("");
-  }
-
+  const completedTodos = todos.filter((todo) => todo.done).length;
+  const totalTodos = todos.length;
+  const sortedTodos = todos.slice().sort((a,b) => a.done - b.done);
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          onChange={(e) => setTodo(e.target.value)}
-          value={todo}
-        />
-        <button type="submit">Add</button>
-      </form>
-      {todos.map((item) => (
-        <TodoItems key={item} item={item} />
-      ))}
+      <Form todos={todos} setTodos={setTodos} />
+      <TodoList todos={sortedTodos} setTodos={setTodos} />
+      <Footer completedTodos={completedTodos} totalTodos={totalTodos} />
     </div>
   );
 }
